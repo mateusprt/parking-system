@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.parking.dtos.AuthenticationRequestDto;
-import com.parking.dtos.AuthenticationResponseDto;
-import com.parking.dtos.RegistrationRequestDto;
-import com.parking.dtos.ResponseRequestDto;
+import com.parking.dtos.auth.AuthenticationRequestDto;
+import com.parking.dtos.auth.AuthenticationResponseDto;
+import com.parking.dtos.auth.RegistrationRequestDto;
+import com.parking.dtos.shared.ResponseRequestDto;
 import com.parking.services.AuthService;
 
 import jakarta.validation.Valid;

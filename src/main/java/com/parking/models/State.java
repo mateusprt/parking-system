@@ -9,6 +9,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,8 +30,11 @@ public class State {
 	@Column
 	private String uf;
 	
-	@OneToMany(mappedBy = "state")
+	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
 	private List<City> cities;
+	
+	@OneToMany(mappedBy = "state", fetch = FetchType.LAZY)
+	private List<Garage> garages;
 	
 	@Column(name = "created_at")
 	@CreationTimestamp

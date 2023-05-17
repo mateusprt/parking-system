@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.parking.dtos.RoleDto;
-import com.parking.models.Role;
+import com.parking.dtos.role.RoleDto;
 import com.parking.services.RolesService;
 
 import jakarta.annotation.security.RolesAllowed;
@@ -31,29 +30,29 @@ public class RolesController {
 	
 	@GetMapping
 	@RolesAllowed("ADMIN")
-	public ResponseEntity<List<Role>> getAllRoles() {
-		List<Role> roles = this.rolesService.getAllRoles();
+	public ResponseEntity<List<RoleDto>> list() {
+		List<RoleDto> roles = this.rolesService.getAllRoles();
 		return ResponseEntity.ok(roles);
 	}
 
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@RolesAllowed("ADMIN")
-	public void createRole(@Valid @RequestBody RoleDto roleDto) {
+	public void create(@Valid @RequestBody RoleDto roleDto) {
 		this.rolesService.create(roleDto);
 	}
 	
 	@PutMapping
 	@ResponseStatus(HttpStatus.OK)
 	@RolesAllowed("ADMIN")
-	public void updateRole(@Valid @RequestBody RoleDto roleDto) {
+	public void update(@Valid @RequestBody RoleDto roleDto) {
 		this.rolesService.update(roleDto);
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@RolesAllowed("ADMIN")
-	public void deleteRole(@PathVariable("id") Long id) {
+	public void delete(@PathVariable("id") Long id) {
 		this.rolesService.delete(id);
 	}
 }

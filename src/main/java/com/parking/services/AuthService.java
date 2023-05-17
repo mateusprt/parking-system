@@ -3,6 +3,7 @@ package com.parking.services;
 import java.util.Date;
 import java.util.UUID;
 
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -10,8 +11,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.parking.dtos.AuthenticationRequestDto;
-import com.parking.dtos.RegistrationRequestDto;
+import com.parking.dtos.auth.AuthenticationRequestDto;
+import com.parking.dtos.auth.RegistrationRequestDto;
 import com.parking.exceptions.ResourceNotFoundException;
 import com.parking.models.Role;
 import com.parking.models.User;
@@ -35,9 +36,11 @@ public class AuthService {
 	
 	@Autowired
 	private JwtService jwtService;
+	
+	private Logger log = Logger.getLogger("INFO");
 
 	public void register(RegistrationRequestDto registrationRequest) {
-		User userExists = this.usersRepository.findByEmail(registrationRequest.getEmail()).orElseThrow();
+		User userExists = this.usersRepository.findByEmail(registrationRequest.getEmail()).orElse(null);
 		
 		if(userExists != null) {
 			throw new BadCredentialsException("User already exists");
@@ -60,6 +63,7 @@ public class AuthService {
 		newUser.setConfirmationTokenSentAt(new Date());
 		
 		Role role = this.rolesRepository.findByName("USER");
+		log.info(role.getName());
 		newUser.setRole(role);
 		newUser.setCreatedAt(new Date());
 		newUser.setUpdatedAt(new Date());

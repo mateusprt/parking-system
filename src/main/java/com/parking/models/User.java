@@ -13,12 +13,15 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "users")
@@ -31,14 +34,18 @@ public class User implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="role_id")
+	@NotNull(message = "Role can't be blank")
 	private Role role;
 	
 	@Column
+	@NotNull(message = "Email can't be blank")
+	@Email
 	private String email;
 	
 	@Column
+	@NotNull(message = "Password can't be blank")
 	private String password;
 	
 	@Column(name = "confirmation_token")

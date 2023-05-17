@@ -1,8 +1,9 @@
-package com.parking.dtos;
+package com.parking.dtos.role;
 
 import jakarta.validation.constraints.NotBlank;
 
 public class RoleDto {
+
 	
 	@NotBlank(message = "Name can't be blank")
 	private String name;
@@ -14,7 +15,7 @@ public class RoleDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	
 
 }

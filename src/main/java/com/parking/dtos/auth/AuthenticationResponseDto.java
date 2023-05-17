@@ -1,4 +1,4 @@
-package com.parking.dtos;
+package com.parking.dtos.auth;
 
 public class AuthenticationResponseDto {
 	

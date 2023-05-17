@@ -1,4 +1,4 @@
-package com.parking.dtos;
+package com.parking.dtos.shared;
 
 public class ResponseRequestDto {
 	

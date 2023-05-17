@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,6 +16,10 @@ import org.springframework.web.context.request.WebRequest;
 
 import com.parking.exceptions.ExceptionResponse;
 import com.parking.exceptions.ResourceNotFoundException;
+
+import jakarta.validation.ConstraintViolationException;
+
+
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -53,5 +58,20 @@ public class GlobalExceptionHandler {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), List.of(e.getMessage()), request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.UNAUTHORIZED);
 	}
-
+	
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadableExceptions(HttpMessageNotReadableException e, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), List.of("Body is missing"), request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(ConstraintViolationException.class)
+	public ResponseEntity<ExceptionResponse> handleConstraintViolationExceptions(ConstraintViolationException e, WebRequest request) {
+		List<String> errors = new ArrayList<>();
+        e.getConstraintViolations().forEach(violation -> {
+            errors.add(violation.getMessage());
+        });
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), errors, request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
 }
