@@ -2,6 +2,7 @@ package com.parking.models;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -15,6 +16,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -49,6 +51,9 @@ public class Garage {
 	@JoinColumn(name="city_id")
 	@NotNull(message = "City can't be blank")
 	private City city;
+	
+	@OneToMany(mappedBy = "garage", fetch = FetchType.EAGER)
+	private List<Spot> spots;
 	
 	@Column(name = "rate_compact", precision = 10, scale=2)
 	@NotNull(message = "Rate compact can't be blank")
@@ -167,6 +172,14 @@ public class Garage {
 
 	public void setUpdatedAt(Date updatedAt) {
 		this.updatedAt = updatedAt;
+	}
+
+	public List<Spot> getSpots() {
+		return spots;
+	}
+
+	public void setSpots(List<Spot> spots) {
+		this.spots = spots;
 	}
 
 	@Override

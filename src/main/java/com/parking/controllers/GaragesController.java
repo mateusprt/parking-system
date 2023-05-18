@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.parking.dtos.garage.GarageDto;
 import com.parking.dtos.garage.ShowGarageDto;
+import com.parking.dtos.spots.SpotDto;
+import com.parking.dtos.spots.UpdateSpotDto;
 import com.parking.services.GaragesService;
 
 import jakarta.validation.Valid;
@@ -46,6 +48,24 @@ public class GaragesController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
 		this.garagesService.deleteGarage(id);
+		return ResponseEntity.ok().build();
+	}
+	
+	@PostMapping("/{id}/spots")
+	public ResponseEntity<Void> createSpot(@PathVariable("id") Long id, @Valid @RequestBody SpotDto dto) {
+		this.garagesService.createSpotOfGarage(id, dto);
+		return ResponseEntity.ok().build();
+	}
+	
+	@PutMapping("/{id}/spots/{spotId}")
+	public ResponseEntity<Void> updateSpot(@PathVariable("id") Long id, @PathVariable("spotId") Long spotId, @RequestBody UpdateSpotDto dto) {
+		this.garagesService.updateSpotOfGarage(id, spotId, dto);
+		return ResponseEntity.ok().build();
+	}
+	
+	@DeleteMapping("/{id}/spots/{spotId}")
+	public ResponseEntity<Void> deleteSpot(@PathVariable("id") Long id, @PathVariable("spotId") Long spotId) {
+		this.garagesService.deleteSpotOfGarage(id, spotId);
 		return ResponseEntity.ok().build();
 	}
 	

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
+import com.parking.exceptions.EnumTypeNotFoundException;
 import com.parking.exceptions.ExceptionResponse;
 import com.parking.exceptions.ResourceNotFoundException;
 
@@ -61,7 +62,7 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(HttpMessageNotReadableException.class)
 	public ResponseEntity<ExceptionResponse> handleHttpMessageNotReadableExceptions(HttpMessageNotReadableException e, WebRequest request) {
-		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), List.of("Body is missing"), request.getDescription(false));
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), List.of("Request format incorrect"), request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	
@@ -72,6 +73,12 @@ public class GlobalExceptionHandler {
             errors.add(violation.getMessage());
         });
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), errors, request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(EnumTypeNotFoundException.class)
+	public ResponseEntity<ExceptionResponse> handleEnumTypeNotFoundExceptions(EnumTypeNotFoundException e, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), List.of(e.getMessage()), request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 }
