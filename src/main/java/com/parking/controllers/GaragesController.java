@@ -19,6 +19,7 @@ import com.parking.dtos.spots.SpotDto;
 import com.parking.dtos.spots.UpdateSpotDto;
 import com.parking.services.GaragesService;
 
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 
 @RestController
@@ -29,41 +30,48 @@ public class GaragesController {
 	private GaragesService garagesService;
 	
 	@GetMapping
+	@RolesAllowed("ADMIN")
 	public ResponseEntity<List<ShowGarageDto>> list() {
 		return ResponseEntity.ok(this.garagesService.listAllGarages());
 	}
 	
 	@PostMapping
+	@RolesAllowed("ADMIN")
 	public ResponseEntity<Void> create(@Valid @RequestBody GarageDto garageDto) {
 		this.garagesService.createGarage(garageDto);
 		return ResponseEntity.ok().build();
 	}
 	
 	@PutMapping("/{id}") 
+	@RolesAllowed("ADMIN")
 	public ResponseEntity<Void> update(@PathVariable("id") Long id, @Valid @RequestBody GarageDto garageDto) {
 		this.garagesService.updateGarage(id, garageDto);
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/{id}")
+	@RolesAllowed("ADMIN")
 	public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
 		this.garagesService.deleteGarage(id);
 		return ResponseEntity.ok().build();
 	}
 	
 	@PostMapping("/{id}/spots")
+	@RolesAllowed("ADMIN")
 	public ResponseEntity<Void> createSpot(@PathVariable("id") Long id, @Valid @RequestBody SpotDto dto) {
 		this.garagesService.createSpotOfGarage(id, dto);
 		return ResponseEntity.ok().build();
 	}
 	
 	@PutMapping("/{id}/spots/{spotId}")
+	@RolesAllowed("ADMIN")
 	public ResponseEntity<Void> updateSpot(@PathVariable("id") Long id, @PathVariable("spotId") Long spotId, @RequestBody UpdateSpotDto dto) {
 		this.garagesService.updateSpotOfGarage(id, spotId, dto);
 		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/{id}/spots/{spotId}")
+	@RolesAllowed("ADMIN")
 	public ResponseEntity<Void> deleteSpot(@PathVariable("id") Long id, @PathVariable("spotId") Long spotId) {
 		this.garagesService.deleteSpotOfGarage(id, spotId);
 		return ResponseEntity.ok().build();
