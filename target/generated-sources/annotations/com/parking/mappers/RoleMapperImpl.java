@@ -6,7 +6,7 @@ import com.parking.models.Role;
 /*
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-18T10:38:43-0300",
+    date = "2023-05-23T16:04:30-0300",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.7 (Oracle Corporation)"
 )
 */

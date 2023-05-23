@@ -13,7 +13,7 @@
 	<groupId>com.parking</groupId>
 	<artifactId>parking_system</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>parking_system</name>
+	<name>parking_system</name> 
 	<description>A parking system API</description>
 	
 	<properties>

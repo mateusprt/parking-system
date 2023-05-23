@@ -3,13 +3,13 @@ package com.parking.exceptions;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class ResourceNotFoundException extends RuntimeException {
+@ResponseStatus(HttpStatus.BAD_REQUEST)
+public class UnsupportedVehicleTypeException extends RuntimeException {
 	
 
 	private static final long serialVersionUID = 1L;
 
-	public ResourceNotFoundException(String msg) {
+	public UnsupportedVehicleTypeException(String msg) {
 		super(msg);
 	}
 	

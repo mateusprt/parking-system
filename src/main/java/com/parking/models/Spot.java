@@ -27,9 +27,9 @@ public class Spot {
 	@JoinColumn(name = "garage_id")
 	private Garage garage;
 	
-	@Column(name="vehicle_type")
 	@Enumerated(EnumType.STRING)
-	@NotNull(message = "vehicleType can't be blank")
+	@Column(name="vehicle_type")
+	@NotNull(message = "vehicle_type can't be blank")
 	private VehicleType vehicleType;
 	
 	@Enumerated(EnumType.STRING)

@@ -52,7 +52,7 @@ public class Garage {
 	@NotNull(message = "City can't be blank")
 	private City city;
 	
-	@OneToMany(mappedBy = "garage", fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "garage", fetch = FetchType.LAZY)
 	private List<Spot> spots;
 	
 	@Column(name = "rate_compact", precision = 10, scale=2)

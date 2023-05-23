@@ -13,10 +13,13 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import com.parking.exceptions.EnumTypeNotFoundException;
 import com.parking.exceptions.ExceptionResponse;
 import com.parking.exceptions.ResourceNotFoundException;
+import com.parking.exceptions.SpotNotAvailableException;
+import com.parking.exceptions.UnsupportedVehicleTypeException;
 
 import jakarta.validation.ConstraintViolationException;
 
@@ -40,17 +43,23 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(ResourceNotFoundException.class)
 	public ResponseEntity<ExceptionResponse> handleResourceNotFoundExecptions(ResourceNotFoundException e, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), List.of(e.getMessage()), request.getDescription(false));
-		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
 	}
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
-	public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValid (MethodArgumentNotValidException e, WebRequest request) {
+	public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidExceptions (MethodArgumentNotValidException e, WebRequest request) {
 		List<String> listOfErrorsMessages = new ArrayList<>();
 		e.getBindingResult().getAllErrors().forEach((error) -> {
 	        String errorMessage = error.getDefaultMessage();
 	        listOfErrorsMessages.add(errorMessage);
 		});
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), listOfErrorsMessages, request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public ResponseEntity<ExceptionResponse> handleMethodArgumentTypeMismatchExceptions (MethodArgumentTypeMismatchException e, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), List.of("Request format incorrect"), request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}
 	
@@ -78,6 +87,18 @@ public class GlobalExceptionHandler {
 	
 	@ExceptionHandler(EnumTypeNotFoundException.class)
 	public ResponseEntity<ExceptionResponse> handleEnumTypeNotFoundExceptions(EnumTypeNotFoundException e, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), List.of(e.getMessage()), request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
+	}
+	
+	@ExceptionHandler(SpotNotAvailableException.class)
+	public ResponseEntity<ExceptionResponse> handleSpotNotAvailableExceptions(SpotNotAvailableException e, WebRequest request) {
+		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), List.of(e.getMessage()), request.getDescription(false));
+		return new ResponseEntity<>(exceptionResponse, HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(UnsupportedVehicleTypeException.class)
+	public ResponseEntity<ExceptionResponse> handleUnsupportedVehicleTypeExceptions(UnsupportedVehicleTypeException e, WebRequest request) {
 		ExceptionResponse exceptionResponse = new ExceptionResponse(new Date(), List.of(e.getMessage()), request.getDescription(false));
 		return new ResponseEntity<>(exceptionResponse, HttpStatus.BAD_REQUEST);
 	}

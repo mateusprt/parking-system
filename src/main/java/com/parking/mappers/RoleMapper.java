@@ -12,9 +12,6 @@ public interface RoleMapper {
 	
 	RoleMapper INSTANCE = Mappers.getMapper(RoleMapper.class);
 	
-	@Mapping(source = "name", target = "name")
 	Role dtoToRole(RoleDto dto);
-	
-	@Mapping(source = "name", target = "name")
 	RoleDto roleToDto(Role role);
 }
