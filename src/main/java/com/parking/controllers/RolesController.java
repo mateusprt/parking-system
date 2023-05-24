@@ -38,8 +38,9 @@ public class RolesController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	@RolesAllowed("ADMIN")
-	public void create(@Valid @RequestBody RoleDto roleDto) {
+	public ResponseEntity<Void> create(@Valid @RequestBody RoleDto roleDto) {
 		this.rolesService.create(roleDto);
+		return new ResponseEntity<>(null, HttpStatus.CREATED);
 	}
 	
 	@PutMapping

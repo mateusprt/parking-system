@@ -1,6 +1,7 @@
 package com.parking.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,7 +27,8 @@ public class AuthController {
 	@PostMapping("/register")
 	public ResponseEntity<ResponseRequestDto> register(@Valid @RequestBody RegistrationRequestDto registrationBody) {
 		this.authService.register(registrationBody);
-		return ResponseEntity.ok(new ResponseRequestDto("Account created sucessfully! A verification link was sent to your email."));
+		ResponseRequestDto dto = new ResponseRequestDto("Account created sucessfully! A verification link was sent to your email.");
+		return new ResponseEntity<>(dto, HttpStatus.CREATED);
 	}
 	
 	@PostMapping("/confirmation/{confirmationToken}")
