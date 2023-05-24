@@ -43,17 +43,19 @@ public class RolesController {
 		return new ResponseEntity<>(null, HttpStatus.CREATED);
 	}
 	
-	@PutMapping
+	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@RolesAllowed("ADMIN")
-	public void update(@Valid @RequestBody RoleDto roleDto) {
-		this.rolesService.update(roleDto);
+	public ResponseEntity<Void> update(@PathVariable("id") Long id, @Valid @RequestBody RoleDto roleDto) {
+		this.rolesService.update(id, roleDto);
+		return ResponseEntity.ok().build();
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
 	@RolesAllowed("ADMIN")
-	public void delete(@PathVariable("id") Long id) {
+	public ResponseEntity<Void> delete(@PathVariable("id") Long id) {
 		this.rolesService.delete(id);
+		return ResponseEntity.ok().build();
 	}
 }

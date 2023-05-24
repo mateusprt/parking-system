@@ -33,10 +33,10 @@ public class RolesService {
 		this.rolesRepository.save(role);
 	}
 	
-	public void update(RoleDto roleDto) {
-		Role role = new Role();
-		role.setName(roleDto.getName());
-		this.rolesRepository.save(role);
+	public void update(Long id, RoleDto roleDto) {
+		Role roleFound = this.rolesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found"));
+		roleFound.setName(roleDto.getName());
+		this.rolesRepository.save(roleFound);
 	}
 	
 	public void delete(Long id) {
