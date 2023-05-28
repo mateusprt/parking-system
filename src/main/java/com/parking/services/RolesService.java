@@ -8,13 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.parking.dtos.role.RoleDto;
 import com.parking.exceptions.ResourceNotFoundException;
-import com.parking.mappers.RoleMapper;
+import com.parking.mappers.ApplicationMapper;
 import com.parking.models.Role;
 import com.parking.repositories.RolesRepository;
 
 @Service
 public class RolesService {
-	
+
 	@Autowired
 	private RolesRepository rolesRepository;
 	
@@ -22,15 +22,21 @@ public class RolesService {
 		List<Role> roles = this.rolesRepository.findAll();
 		List<RoleDto> dtos = new ArrayList<>();
 		roles.forEach((role) -> {
-			RoleDto dto = RoleMapper.INSTANCE.roleToDto(role);
+			RoleDto dto = ApplicationMapper.map(role, RoleDto.class);
 			dtos.add(dto);
 		});
 		return dtos;
 	}
 	
 	public void create(RoleDto roleDto) {
-		Role role = RoleMapper.INSTANCE.dtoToRole(roleDto);
+		Role role = ApplicationMapper.map(roleDto, Role.class);
 		this.rolesRepository.save(role);
+	}
+	
+	public RoleDto findById(Long id) {
+		Role roleFound = this.rolesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Role not found"));
+		RoleDto dto = ApplicationMapper.map(roleFound, RoleDto.class);
+		return dto;
 	}
 	
 	public void update(Long id, RoleDto roleDto) {

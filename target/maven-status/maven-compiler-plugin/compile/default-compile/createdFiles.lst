@@ -4,7 +4,9 @@ com\parking\services\GaragesService.class
 com\parking\controllers\ReservationsController.class
 com\parking\repositories\GaragesRepository.class
 com\parking\models\Reservation.class
+com\parking\exceptions\UnsupportedVehicleTypeException.class
 com\parking\config\DefaultSecurityFilterChainConfig$1.class
+com\parking\mappers\ApplicationMapper.class
 com\parking\models\State.class
 com\parking\services\JwtService.class
 com\parking\exceptions\handlers\GlobalExceptionHandler.class
@@ -14,9 +16,7 @@ com\parking\models\Spot.class
 com\parking\config\PasswordEncoderConfig.class
 com\parking\config\EnsureAuthenticationFilter.class
 com\parking\controllers\GaragesController.class
-com\parking\mappers\GarageMapperImpl.class
 com\parking\dtos\auth\RegistrationRequestDto.class
-com\parking\mappers\SpotMapper.class
 com\parking\controllers\HomeController.class
 com\parking\dtos\reservations\ResponseReservationDto.class
 com\parking\repositories\ReservationsRepository.class
@@ -24,12 +24,9 @@ com\parking\models\City.class
 com\parking\dtos\shared\ResponseRequestDto.class
 com\parking\repositories\SpotsRepository.class
 com\parking\dtos\auth\AuthenticationRequestDto.class
-com\parking\mappers\RoleMapper.class
 com\parking\models\Role.class
 com\parking\repositories\CitiesRepository.class
-com\parking\mappers\GarageMapper.class
 com\parking\models\Status.class
-com\parking\HotelReservationSystemApplication.class
 com\parking\dtos\spots\UpdateSpotDto.class
 com\parking\dtos\garage\ShowGarageDto.class
 com\parking\repositories\UsersRepository.class
@@ -37,12 +34,8 @@ com\parking\dtos\state\StateDto.class
 com\parking\exceptions\ExceptionResponse.class
 com\parking\dtos\auth\AuthenticationResponseDto.class
 com\parking\config\AuthenticationProviderConfig.class
-com\parking\mappers\ReservationMapper.class
-com\parking\mappers\RoleMapperImpl.class
 com\parking\repositories\StatesRepository.class
 com\parking\dtos\role\RoleDto.class
-com\parking\mappers\SpotMapperImpl.class
-com\parking\mappers\ReservationMapperImpl.class
 com\parking\services\AuthService.class
 com\parking\models\User.class
 com\parking\services\ReservationsService.class
@@ -52,7 +45,9 @@ com\parking\dtos\spots\SpotDto.class
 com\parking\exceptions\EnumTypeNotFoundException.class
 com\parking\exceptions\SpotNotAvailableException.class
 com\parking\config\AuthenticationManagerConfig.class
+com\parking\ParkingSystemApplication.class
 com\parking\dtos\reservations\CreateReservationDto.class
 com\parking\models\VehicleType.class
+com\parking\services\ReservationsService$1.class
 com\parking\repositories\RolesRepository.class
 com\parking\controllers\AuthController.class

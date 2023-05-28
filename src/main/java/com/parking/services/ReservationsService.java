@@ -14,7 +14,7 @@ import com.parking.dtos.reservations.ResponseReservationDto;
 import com.parking.exceptions.ResourceNotFoundException;
 import com.parking.exceptions.SpotNotAvailableException;
 import com.parking.exceptions.UnsupportedVehicleTypeException;
-import com.parking.mappers.ReservationMapper;
+import com.parking.mappers.ApplicationMapper;
 import com.parking.models.Garage;
 import com.parking.models.Reservation;
 import com.parking.models.Spot;
@@ -47,7 +47,7 @@ public class ReservationsService {
 		List<Reservation> reservations = this.reservationsRepository.findAll();
 		List<ResponseReservationDto> listOfDtos = new ArrayList<>();
 		reservations.forEach((reservation) -> {
-			listOfDtos.add(ReservationMapper.INSTANCE.reservationToDto(reservation));
+			listOfDtos.add(ApplicationMapper.map(reservation, ResponseReservationDto.class));
 		});
 		return listOfDtos;
 	}
@@ -86,7 +86,7 @@ public class ReservationsService {
 		spotAvailable.setStatus(Status.RESERVED);
 		this.spotsRepository.save(spotAvailable);
 		
-		ResponseReservationDto responseDto = ReservationMapper.INSTANCE.reservationToDto(newReservation);
+		ResponseReservationDto responseDto = ApplicationMapper.map(newReservation, ResponseReservationDto.class);
 		
 		return responseDto;
 	}

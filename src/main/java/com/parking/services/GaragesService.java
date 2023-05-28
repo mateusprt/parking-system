@@ -11,8 +11,7 @@ import com.parking.dtos.garage.ShowGarageDto;
 import com.parking.dtos.spots.SpotDto;
 import com.parking.dtos.spots.UpdateSpotDto;
 import com.parking.exceptions.ResourceNotFoundException;
-import com.parking.mappers.GarageMapper;
-import com.parking.mappers.SpotMapper;
+import com.parking.mappers.ApplicationMapper;
 import com.parking.models.Garage;
 import com.parking.models.Spot;
 import com.parking.models.State;
@@ -37,14 +36,14 @@ public class GaragesService {
 		List<Garage> garages = this.garagesRepository.findAll();
 		List<ShowGarageDto> garagesDtos = new ArrayList<>();
 		garages.forEach((garage) -> {
-			ShowGarageDto dto = GarageMapper.INSTANCE.garageToDto(garage);
+			ShowGarageDto dto = ApplicationMapper.map(garage, ShowGarageDto.class);
 			garagesDtos.add(dto);
 		});
 		return garagesDtos;
 	}
 	
 	public void createGarage(GarageDto garageDto) {
-		Garage newGarage = GarageMapper.INSTANCE.dtoToGarage(garageDto);
+		Garage newGarage = ApplicationMapper.map(garageDto, Garage.class);
 		State state = this.statesRepository.findById(1L).orElseThrow(() -> new ResourceNotFoundException("State not found"));
 		newGarage.setState(state);
 		if(state.getCities().size() > 0) {
@@ -78,7 +77,7 @@ public class GaragesService {
 	
 	public void createSpotOfGarage(Long id, SpotDto dto) {
 		Garage garageFound = this.garagesRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Garage not found"));
-		Spot newSpot = SpotMapper.INSTANCE.dtoToSpot(dto);
+		Spot newSpot = ApplicationMapper.map(dto, Spot.class);
 		newSpot.setGarage(garageFound);
 		newSpot.setStatus(Status.AVAILABLE);
 		this.spotsRepository.save(newSpot);
