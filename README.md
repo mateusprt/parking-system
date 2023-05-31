@@ -1,12 +1,12 @@
 
 # Parking System API
 
-This project is a implementation of reservation and payment system for a park garage.
+This project is a implementation of reservation system for a park garage.
 
 [working in progress...]
 
 
-## Referência
+## References
 
  - [Design Parking Garage](https://www.youtube.com/watch?v=NtMvNh0WFVM)
  - [System Design Interview: Parking Lot System](https://medium.com/double-pointer/system-design-interview-parking-lot-system-ff2c58167651)
