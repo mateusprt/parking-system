@@ -3,9 +3,6 @@
 
 This project is a implementation of reservation system for a park garage.
 
-[working in progress...]
-
-
 ## References
 
  - [Design Parking Garage](https://www.youtube.com/watch?v=NtMvNh0WFVM)
